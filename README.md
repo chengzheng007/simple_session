@@ -10,8 +10,9 @@ simple session base on redis storage, refer to beego, just for simple useage
 		"fmt"
 	)
 	
+	/* set your own session config */
 	config := simple_session.Config{
-		/* ... your own session config */
+		
 	}
 	err := simple_session.Init(config)
 	if err != nil {
@@ -36,7 +37,7 @@ simple session base on redis storage, refer to beego, just for simple useage
 	
 	// persistence variable to redis(store in redis really)
 	if err := sess.Persistence(); err != nil {
-		log.Fatal("sess.Persistence() failed")
+		fmt.Println("sess.Persistence() failed")
 		return
 	}
 	
