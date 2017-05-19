@@ -1,5 +1,5 @@
 # simple_session
-simple session base on redis storage, refer to beego, just for simple useage 
+simple session read and write session data base on redis, it refer to beego, but it was very simple and light
 
 
 # example 
