@@ -1,17 +1,17 @@
-package session
+package simple_session
 
 import (
 	"encoding/hex"
 	"errors"
-	"git.liebaopay.com/cm_life/bank/dao/session/store"
 	"math/rand"
 	"net/http"
 	"net/url"
+	"simple_session/store"
 	"time"
 )
 
 type Config struct {
-	SidPrefix       string `json:"sidPrefix"` // sid前缀
+	SidPrefix       string `json:"sidPrefix"` // sid ptrfix in redis key
 	CookieName      string `json:"cookieName"`
 	EnableSetCookie bool   `json:"enableSetCookie,omitempty"`
 	Gclifetime      int64  `json:"gclifetime"`
@@ -55,7 +55,7 @@ func SessionStart(w http.ResponseWriter, r *http.Request) (*store.Store, error) 
 		return store.SessionRead(sid)
 	}
 
-	// 新会话
+	// generate a new session id
 	sid = genSid()
 	stobj, err := store.SessionRead(sid)
 	if err != nil {
@@ -83,7 +83,7 @@ func SessionStart(w http.ResponseWriter, r *http.Request) (*store.Store, error) 
 	return stobj, nil
 }
 
-// 获取浏览器带过来的sid
+// get sid from browser
 func getSid(r *http.Request) (string, error) {
 	cookie, err := r.Cookie(cookieCfg.CookieName)
 
@@ -91,14 +91,14 @@ func getSid(r *http.Request) (string, error) {
 		if err = r.ParseForm(); err != nil {
 			return "", err
 		}
-		// 是否在get/post参数里
+		// make sure it is in GET or POST
 		sid := r.FormValue(cookieCfg.CookieName)
 		return sid, nil
 	}
 	return url.QueryEscape(cookie.Value), nil
 }
 
-// 生成sid
+// gen sid
 func genSid() string {
 	rand.Seed(time.Now().UnixNano())
 	sids := make([]byte, cookieCfg.SessionIDLength)

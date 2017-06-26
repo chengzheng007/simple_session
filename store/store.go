@@ -23,7 +23,7 @@ var (
 	pool            *redis.Pool
 )
 
-// 初始化redis pool
+// initilize redis pool
 // ip:port,maxIdleNum,pwd,redisDbNum
 func InitPool(maxLifeTime int64, cfgStr string) error {
 	sessionLifeTime = maxLifeTime

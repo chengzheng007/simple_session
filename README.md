@@ -4,13 +4,13 @@ simple session read and write session data base on redis, it refer to beego, but
 
 # example 
 * init configuration variable
-```json
+```go
 	import (
 		"github.com/chengzheng007/simple_session"
 		"fmt"
 	)
 	
-	/* set your own session config */
+	// set your own session config
 	config := simple_session.Config{
 		
 	}
@@ -21,7 +21,7 @@ simple session read and write session data base on redis, it refer to beego, but
 ```
 
 * start session, set or get variable
-```json
+```go
 	// import necessary package
 
 	// w: http.ResponseWriter, r: *http.Request
@@ -42,5 +42,5 @@ simple session read and write session data base on redis, it refer to beego, but
 	val := sess.Get("username")
 	// here may need type assertion, because Get always return interface{}
 	valI64, _ := val.(int64)
-
 ```
+
